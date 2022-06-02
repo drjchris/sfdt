@@ -10,4 +10,4 @@ A simple set of tools to help manage datasets. Specifically made for the cross-c
 
 ## count values
 
-    countVals([rawlist]) # returns a list of dicts
+    countValues([rawlist]) # returns a list of dicts
