@@ -18,4 +18,6 @@ def countValues(rawlist: list) -> list:
     outlist = []
     for eent in interdict:
         outlist.append({'value': eent, 'count': interdict[eent]})
-    return outlist
+    #sortlistout = 
+    return sorted(outlist, key=lambda item: item.get("count"), reverse=True)
+    #return sortlistout
