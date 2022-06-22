@@ -1,5 +1,7 @@
 from datetime import datetime
+from hashlib import md5
 
+# created a simple list of dates
 def listDates(sdate: str, edate: str) -> list:
     start_date = datetime.strptime(sdate.strip(), '%Y-%m-%d')
     end_date = datetime.strptime(edate.strip(), '%Y-%m-%d')
@@ -8,7 +10,7 @@ def listDates(sdate: str, edate: str) -> list:
         for m in range(start_date.month if y == start_date.year else 1, end_date.month + 1 if y == end_date.year else 13)]
     return outlist
 
-
+# simple value counter returns for dataframe
 def countValues(rawlist: list) -> list:
     interdict = {}
     for inval in sorted(list(set(rawlist))):
@@ -21,3 +23,7 @@ def countValues(rawlist: list) -> list:
     #sortlistout = 
     return sorted(outlist, key=lambda item: item.get("count"), reverse=True)
     #return sortlistout
+
+# anonymises a string by implementing md5 thing
+def makeAnon(theInput: str) -> str:
+    return md5(theInput.encode()).hexdigest()

@@ -4,10 +4,10 @@ A simple set of tools to help manage datasets. Specifically made for the cross-c
 
 ---
 
-## listDates
+# Available functions
 
-    listDates(startdate, enddate) # yyyy-mm-dd format
-
-## count values
-
-    countValues([rawlist]) # returns a list of dicts
+``` python
+    listDates(startdate, enddate)   # yyyy-mm-dd format
+    countValues([rawlist])          # returns a list of dicts
+    makeAnon(string)                # returns hash value
+```
