@@ -1,5 +1,9 @@
 from datetime import datetime
 from hashlib import md5
+from typing import Dict
+from pandas import DataFrame
+from numpy import cumsum
+from json import loads
 
 # created a simple list of dates
 def listDates(sdate: str, edate: str) -> list:
@@ -27,3 +31,32 @@ def countValues(rawlist: list) -> list:
 # anonymises a string by implementing md5 thing
 def makeAnon(theInput: str) -> str:
     return md5(theInput.encode()).hexdigest()
+
+# calculates full community structure
+def commStruct(rawList: list) -> Dict:
+
+    # count the values
+    theCount = countValues(rawList)
+
+    # pass on to dataframe
+    outdf = DataFrame(theCount)
+
+    # add pc and cpc
+    outdf['pc'] = outdf['count']/sum(outdf['count'])
+    outdf['cpc'] = cumsum(outdf['pc'])
+
+    # apply layers
+    outdf['layer'] = 3
+    outdf.loc[outdf['cpc']<0.666666, 'layer'] = 2
+    outdf.loc[outdf['cpc']<0.333333, 'layer'] = 1
+    outdf.loc[0,'layer'] = 1
+
+    # declare output dictionary
+    fullDict = {
+        'core': list(outdf['value'][outdf['layer']==1]),
+        'mid': list(outdf['value'][outdf['layer']==2]),
+        'per': list(outdf['value'][outdf['layer']==3]),
+        'data': loads(outdf.to_json(orient="records"))
+    }
+
+    return fullDict
